@@ -66,7 +66,7 @@ def get_kernel_routes(interface, ipv6):
                       raw_routes.stderr.strip())
         return
     # Exclude kernel routes from the list, generated for interface assigned ips and subnets
-    routes = [route.split()[0] for route in raw_routes.stdout.split("\n") if route != "" and "proto kernel" not in route]
+    routes = [route.split()[0] for route in raw_routes.stdout.split("\n") if route != "" and "proto kernel" not in route and "proto babel" not in route]
     # Handle "default" route
     default_route = "::/0" if ipv6 else "0.0.0.0/0"
     routes = map(lambda route: default_route if route == "default" else route,
